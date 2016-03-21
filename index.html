@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+  <!-- By Matthew Schroyer mschroyer@gmail.com -->
+  <!-- Cesium demo for the Center for Teaching and Learning, Oklahoma City Community College -->
+<html lang="en">
+<head>
+	<!-- Use correct character set. -->
+	<meta charset="utf-8">
+	<!-- Tell IE to use the latest, best version (or Chrome Frame if pre-IE11). -->
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+	<meta name="author" content="Matthew Schroyer">
+	<meta name="description" content="Digital tour of the Elk Mountain trail in the Wichita Mountains.">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@MattSchroyer" />
+	<meta name="twitter:title" content="Elk Mountain digital tour and panorama" />
+	<meta name="twitter:description" content="Digital tour of the Elk Mountain trail in the Wichita Mountains with Cesium.js and Pannellum.js. Click the pins to learn more about interesting wildlife along the trail, or view a panorama at the top of the mountain." />
+	<meta name="twitter:image" content="http://schroyeroccc.github.io/elkmtn/screenshot.jpg" />
+	<meta property="og:image" content="http://schroyeroccc.github.io/elkmtn/screenshot.jpg" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<title>Welcome to Elk Mountain</title>
+	<script src="../Build/Cesium/Cesium.js"></script>
+	<script src="../Build/Cesium/cesium-cartodb.js"></script>
+	<style>
+      @import url(widgets.css);
+      html, body, #cesiumContainer {
+          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      }
+	  
+	.loadingScreen {
+		display: block;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		background-size:100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-color: #000000;
+		background-image: url(elkmtnLoading.jpg);
+	}
+	
+	#loadingMessage {
+		font-family: sans-serif;
+		font-size: 2em;
+	}
+	
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="loadingScreen" class="loadingScreen">
+	<div id="loadingMessage">
+	Loading a mountain for you...
+	</div>
+  </div>
+  <script>
+var viewer = new Cesium.Viewer('cesiumContainer', {
+	animation : false,
+	baseLayerPicker : false,
+	geocoder : false,
+	homeButton : false,
+	sceneModePicker : false,
+	timeline : false,
+	automaticallyTrackDataSourceClocks : false,
+	skyBox : new Cesium.SkyBox({
+		show : false
+		}),
+	});
+	
+/* Remove infoBox restrictions */
+viewer.infoBox.frame.removeAttribute('sandbox');
+
+var scene = viewer.scene;
+
+scene.terrainProvider = new Cesium.CesiumTerrainProvider({
+    url: '//assets.agi.com/stk-terrain/world',
+    requestVertexNormals : true
+});
+
+var positions = Cesium.Cartesian3.fromDegreesArray(
+				[-98.718635,34.721746
+				,-98.718709,34.721682
+				,-98.718711,34.721675
+				,-98.718765,34.721601
+				,-98.718772,34.721598
+				,-98.718879,34.721609
+				,-98.71889,34.721611
+				,-98.718992,34.721629
+				,-98.719003,34.721628
+				,-98.719053,34.721701
+				,-98.719058,34.721707
+				,-98.719091,34.721789
+				,-98.719091,34.721797
+				,-98.719073,34.721884
+				,-98.719071,34.72189
+				,-98.719155,34.721945
+				,-98.719159,34.721953
+				,-98.719202,34.722029
+				,-98.719212,34.722033
+				,-98.719299,34.722073
+				,-98.719306,34.722078
+				,-98.719367,34.72215
+				,-98.719371,34.722158
+				,-98.719424,34.722236
+				,-98.719429,34.72224
+				,-98.719459,34.722324
+				,-98.719467,34.72233
+				,-98.719515,34.722405
+				,-98.719515,34.722412
+				,-98.719468,34.72249
+				,-98.719466,34.722495
+				,-98.719436,34.722573
+				,-98.719432,34.72258
+				,-98.719423,34.722664
+				,-98.719426,34.722671
+				,-98.719459,34.72275
+				,-98.719461,34.722758
+				,-98.719482,34.722845
+				,-98.719484,34.722853
+				,-98.719534,34.722924
+				,-98.71954,34.72293
+				,-98.719572,34.723015
+				,-98.719574,34.72302
+				,-98.719592,34.723103
+				,-98.719592,34.723111
+				,-98.71961,34.723197
+				,-98.719612,34.723204
+				,-98.719644,34.723285
+				,-98.719646,34.723293
+				,-98.719666,34.723378
+				,-98.719667,34.723385
+				,-98.71969,34.723472
+				,-98.719691,34.723479
+				,-98.719718,34.723558
+				,-98.719723,34.723565
+				,-98.719767,34.723641
+				,-98.71977,34.723648
+				,-98.719834,34.72372
+				,-98.719844,34.723725
+				,-98.719883,34.723801
+				,-98.719887,34.723808
+				,-98.719951,34.723876
+				,-98.719956,34.723883
+				,-98.719986,34.723968
+				,-98.719988,34.723975
+				,-98.720039,34.724048
+				,-98.720042,34.724055
+				,-98.720096,34.724132
+				,-98.720097,34.724138
+				,-98.720148,34.724214
+				,-98.720151,34.724219
+				,-98.720196,34.724299
+				,-98.720199,34.724305
+				,-98.720254,34.724377
+				,-98.720256,34.724383
+				,-98.720298,34.724464
+				,-98.720299,34.72447
+				,-98.72039,34.724507
+				,-98.720399,34.724509
+				,-98.720502,34.724535
+				,-98.720511,34.724536
+				,-98.720606,34.724571
+				,-98.72061,34.724574
+				,-98.720691,34.724631
+				,-98.720702,34.724635
+				,-98.720776,34.724699
+				,-98.720786,34.724702
+				,-98.720877,34.724749
+				,-98.72088,34.724751
+				,-98.720961,34.724806
+				,-98.720967,34.72481
+				,-98.721036,34.724874
+				,-98.721047,34.724874
+				,-98.721141,34.724918
+				,-98.721145,34.724926
+				,-98.721223,34.724982
+				,-98.721229,34.724987
+				,-98.721299,34.725048
+				,-98.721303,34.725053
+				,-98.721374,34.725115
+				,-98.721379,34.725117
+				,-98.721448,34.725183
+				,-98.721453,34.725186
+				,-98.721536,34.725242
+				,-98.72154,34.725248
+				,-98.721594,34.725322
+				,-98.721592,34.725327
+				,-98.721621,34.725407
+				,-98.721622,34.725413
+				,-98.721653,34.725497
+				,-98.721654,34.725503
+				,-98.721629,34.725584
+				,-98.721628,34.725591
+				,-98.721587,34.725673
+				,-98.721585,34.725679
+				,-98.72152,34.725747
+				,-98.721514,34.72575
+				,-98.721414,34.725734
+				,-98.721404,34.725731
+				,-98.721308,34.725703
+				,-98.721301,34.725699
+				,-98.721247,34.725776
+				,-98.721248,34.725783
+				,-98.721185,34.725856
+				,-98.721174,34.725852
+				,-98.721086,34.725812
+				,-98.721076,34.725807
+				,-98.720968,34.725817
+				,-98.720967,34.725826
+				,-98.72099,34.725909
+				,-98.720993,34.725914
+				,-98.721008,34.725999
+				,-98.721011,34.726007
+				,-98.721075,34.726072
+				,-98.721143,34.726146
+				,-98.72115,34.72615
+				,-98.721205,34.726227
+				,-98.721208,34.726233
+				,-98.721255,34.726305
+				,-98.72126,34.726315
+				,-98.721323,34.726386
+				,-98.721327,34.726393
+				,-98.721352,34.72648
+				,-98.721355,34.726488
+				,-98.721268,34.72654
+				,-98.721263,34.726541
+				,-98.721154,34.726542
+				,-98.721142,34.726538
+				,-98.721043,34.726575
+				,-98.721034,34.726581
+				,-98.720994,34.726664
+				,-98.720988,34.72667
+				,-98.720919,34.726734
+				,-98.720914,34.726739
+				,-98.720841,34.7268
+				,-98.720836,34.726805
+				,-98.720753,34.72686
+				,-98.720747,34.726865
+				,-98.720646,34.726882
+				,-98.720639,34.726885
+				,-98.720545,34.726929
+				,-98.720542,34.72693
+				,-98.720439,34.726944
+				,-98.720431,34.726944
+				,-98.720336,34.72698
+				,-98.720327,34.726985
+				,-98.720242,34.727029
+				,-98.720233,34.727035
+				,-98.72015,34.727092
+				,-98.720144,34.727097
+				,-98.720063,34.727152
+				,-98.720054,34.727158
+				,-98.719983,34.727224
+				,-98.719974,34.727227
+				,-98.719916,34.727298
+				,-98.719914,34.727302
+				,-98.719882,34.727387
+				,-98.719882,34.727393
+				,-98.719884,34.727477
+				,-98.719891,34.727483
+				,-98.719953,34.72755
+				,-98.719955,34.727558
+				,-98.720024,34.727623
+				,-98.720029,34.727627
+				,-98.720038,34.727714
+				,-98.720035,34.72772
+				,-98.719954,34.72778
+				,-98.719946,34.727784
+				,-98.719878,34.72785
+				,-98.719876,34.727857
+				,-98.719849,34.727937
+				,-98.719845,34.727944
+				,-98.7198,34.728025
+				,-98.719792,34.72803
+				,-98.719721,34.728085
+				,-98.71971,34.728091
+				,-98.719611,34.728128
+				,-98.719609,34.728128
+				,-98.719699,34.728162
+				,-98.719708,34.728165
+				,-98.71979,34.728215
+				,-98.719797,34.72822
+				,-98.719802,34.728308
+				,-98.719801,34.728316
+				,-98.719792,34.728401
+				,-98.719788,34.728408
+				,-98.719702,34.728455
+				,-98.719692,34.728461
+				,-98.719604,34.728512
+				,-98.719596,34.728516
+				,-98.719584,34.728596
+				,-98.719584,34.728605
+				,-98.719593,34.72869
+				,-98.719595,34.728699
+				,-98.719653,34.728768
+				,-98.719654,34.728775
+				,-98.719706,34.728847
+				,-98.719712,34.728853
+				,-98.719797,34.728907
+				,-98.719805,34.728912
+				,-98.719823,34.728994
+				,-98.719824,34.729001
+				,-98.719865,34.729082
+				,-98.719867,34.729089
+				,-98.719939,34.729151
+				,-98.719943,34.729153
+				,-98.720008,34.729219
+				,-98.720012,34.729223
+				,-98.71999,34.729306
+				,-98.719986,34.729311
+				,-98.720043,34.729385
+				,-98.720049,34.729392
+				,-98.720149,34.729402
+				,-98.720161,34.729405
+				,-98.720257,34.72943
+				,-98.720267,34.729433
+				,-98.720342,34.729488
+				,-98.720347,34.729494
+				,-98.7203,34.729567
+				,-98.720293,34.729575
+				,-98.720239,34.72965
+				,-98.720235,34.729656
+				,-98.720211,34.729738
+				,-98.72021,34.729745
+				,-98.720213,34.729823
+				,-98.720208,34.729836
+				,-98.720156,34.729911
+				,-98.720147,34.729917
+				,-98.720129,34.730001
+				,-98.720131,34.730007
+				,-98.720171,34.730081
+				,-98.720176,34.73009
+				,-98.720253,34.730152
+				,-98.720259,34.730157
+				,-98.720334,34.730221
+				,-98.720342,34.730224
+				,-98.720412,34.730285
+				,-98.720418,34.73029
+				,-98.720456,34.730371
+				,-98.720459,34.730379
+				,-98.720514,34.730453
+				,-98.720516,34.73046
+				,-98.720581,34.73053
+				,-98.720591,34.730535
+				,-98.72068,34.730576
+				,-98.720684,34.730581
+				,-98.720784,34.730612
+				,-98.720792,34.730616
+				,-98.720883,34.730658
+				,-98.72089,34.730663
+				,-98.720988,34.730668
+				,-98.720999,34.730672
+				,-98.721098,34.730684
+				,-98.721108,34.730681
+				,-98.721209,34.730665
+				,-98.721216,34.730664
+				,-98.721312,34.730632
+				,-98.72132,34.73063
+				,-98.721404,34.73058
+				,-98.721408,34.730575
+				,-98.721498,34.730526
+				,-98.721506,34.730523
+				,-98.721601,34.730489
+				,-98.721612,34.730482
+				,-98.721681,34.730417
+				,-98.721685,34.730409
+				,-98.721746,34.730341
+				,-98.721753,34.730333
+				,-98.721824,34.730265
+				,-98.721831,34.73026
+				,-98.721896,34.730195
+				,-98.721902,34.730191
+				,-98.721985,34.730138
+				,-98.721992,34.730134
+				,-98.722081,34.730088
+				,-98.722085,34.730083
+				,-98.722125,34.730006
+				,-98.722132,34.729998
+				,-98.722226,34.729956
+				,-98.722231,34.729959
+				,-98.722291,34.730031
+				,-98.722294,34.730035
+				,-98.722357,34.730104
+				,-98.722363,34.730111
+				,-98.722432,34.73018
+				,-98.722438,34.73019
+				,-98.722505,34.730259
+				,-98.722511,34.730266
+				,-98.722578,34.730332
+				,-98.722581,34.730336
+				,-98.72262,34.730419
+				,-98.722624,34.730426
+				,-98.72266,34.730507
+				,-98.722663,34.730512
+				,-98.722709,34.73059
+				,-98.722709,34.730597
+				,-98.722735,34.730677
+				,-98.722737,34.730684
+				,-98.722778,34.730766
+				,-98.722779,34.730772
+				,-98.722819,34.730851
+				,-98.722823,34.730858
+				,-98.722857,34.730937
+				,-98.722859,34.730943
+				,-98.722882,34.731027
+				,-98.722884,34.731033
+				,-98.722927,34.731115
+				,-98.722937,34.731123
+				,-98.722977,34.731205
+				,-98.72298,34.731213
+				,-98.723012,34.731291
+				,-98.723015,34.731301
+				,-98.723046,34.73138
+				,-98.723051,34.731389
+				,-98.723125,34.731448
+				,-98.723135,34.731454
+				,-98.723196,34.731524
+				,-98.723206,34.731533
+				,-98.72328,34.731594
+				,-98.72329,34.731603
+				,-98.723366,34.731664
+				,-98.723374,34.73167
+				,-98.723433,34.73172]);
+
+var track = scene.groundPrimitives.add(new Cesium.GroundPrimitive({
+    geometryInstance : new Cesium.GeometryInstance({
+        geometry : new Cesium.CorridorGeometry({
+            positions : positions,
+            width : 20
+            }),
+        attributes: {
+            color: Cesium.ColorGeometryInstanceAttribute.fromColor(new Cesium.Color(0.0, 1.0, 0.0, 0.5))
+            },
+        id : 'track'
+        })
+    }));
+
+var pinBuilder = new Cesium.PinBuilder();
+
+var startPin = viewer.entities.add({
+	id : 'Start',
+    position : Cesium.Cartesian3.fromDegrees(-98.723433,34.73172,474),
+    billboard : {
+		image : 'hikingIcon.png',
+		width : 32,
+		height : 48,
+        verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+    },
+	description : '\
+		<img src="elkmountain.jpg" height="480" width="720">'
+});
+
+var endPin = viewer.entities.add({
+	id : 'Peak',
+    position : Cesium.Cartesian3.fromDegrees(-98.718635,34.721746,642),
+    billboard : {
+		image : 'finishFlag.png',
+		width : 32,
+		height : 40,
+        verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+    },
+	description : '\
+		<iframe\
+		src="http://schroyeroccc.github.io/elkmtn/peakpano.html"\
+		height="480"\
+		width="720"\
+		sandbox="allow-same-origin allow-scripts"\
+		style="border: 0"\
+		scrolling="no">\
+		</iframe>'
+});
+
+var lizardPin = viewer.entities.add({
+	id : 'Male Collared Lizard',
+    position : Cesium.Cartesian3.fromDegrees(-98.722511,34.730266,484.0),
+    billboard : {
+		image : 'lizardPin2.png',
+		width : 30,
+		height : 45,
+        verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+    },
+	description : '\
+		<img src="MLizard.jpg" height="480" width="720">'
+});
+
+var beePin = viewer.entities.add({
+	id : 'Bumblebee on eryngo',
+    position : Cesium.Cartesian3.fromDegrees(-98.719604,34.728512,537.0),
+    billboard : {
+		image : 'bee.png',
+		width : 40,
+		height : 40,
+        verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+    },
+	description : '\
+		<img src="flower.jpg" height="480" width="720">'
+});
+
+var lizardPin = viewer.entities.add({
+	id : 'Female Collared Lizard',
+    position : Cesium.Cartesian3.fromDegrees(-98.719572,34.723015,637.0),
+    billboard : {
+		image : 'lizardPin3.png',
+		width : 30,
+		height : 45,
+        verticalOrigin : Cesium.VerticalOrigin.BOTTOM
+    },
+	description : '\
+		<img src="FLizard.jpg" height="480" width="720">'
+});
+
+/* viewer camera setup */
+var center = Cesium.Cartesian3.fromDegrees(-98.718635,34.721746,100);
+var heading = Cesium.Math.toRadians(170.0);
+var pitch = Cesium.Math.toRadians(-25.0);
+var range = 2200.0;
+viewer.camera.lookAt(center, new Cesium.HeadingPitchRange(heading, pitch, range));
+
+/* CLT logo */
+var img = document.createElement('img');
+img.src = "c4lt_logo.jpg";
+viewer.container.appendChild(img);
+img.style.width = '200px';
+img.style.position = 'fixed';
+img.style.bottom = '50px';
+img.style.left = '1px';
+img.style['pointer-events'] = 'none';
+
+/* Removes loading screen when terrain finishes loading */
+var div = document.getElementById('loadingScreen');
+Cesium.when(track.readyPromise).then(function () {
+	div.style.display = 'none';
+	});
+
+</script>
+</body>
+</html>
