@@ -56,7 +56,7 @@
   </div>
   <script>
   
- Cesium.BingMapsApi.defaultKey = 'AgMPUObFfUw796sB2W3RmUX-IVSpG3lpU4hTzMkLPKTblNcmvfkiO93rgezLiQHz';
+Cesium.BingMapsApi.defaultKey = 'AgMPUObFfUw796sB2W3RmUX-IVSpG3lpU4hTzMkLPKTblNcmvfkiO93rgezLiQHz';
 
 var viewer = new Cesium.Viewer('cesiumContainer', {
 	imageryProvider : new Cesium.BingMapsImageryProvider({
@@ -431,7 +431,7 @@ var positions = Cesium.Cartesian3.fromDegreesArray(
 				,-98.723433,34.73172]);
 
 var track = scene.groundPrimitives.add(new Cesium.GroundPrimitive({
-    geometryInstance : new Cesium.GeometryInstance({
+    geometryInstances : new Cesium.GeometryInstance({
         geometry : new Cesium.CorridorGeometry({
             positions : positions,
             width : 20
