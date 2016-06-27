@@ -56,6 +56,10 @@
   </div>
   <script>
 var viewer = new Cesium.Viewer('cesiumContainer', {
+	imageryProvider : new Cesium.BingMapsImageryProvider({
+		url : 'https://dev.virtualearth.net',
+		key : 'AgMPUObFfUw796sB2W3RmUX-IVSpG3lpU4hTzMkLPKTblNcmvfkiO93rgezLiQHz'
+		}),
 	animation : false,
 	baseLayerPicker : false,
 	geocoder : false,
@@ -516,16 +520,6 @@ var heading = Cesium.Math.toRadians(170.0);
 var pitch = Cesium.Math.toRadians(-25.0);
 var range = 2200.0;
 viewer.camera.lookAt(center, new Cesium.HeadingPitchRange(heading, pitch, range));
-
-/* CLT logo */
-var img = document.createElement('img');
-img.src = "c4lt_logo.jpg";
-viewer.container.appendChild(img);
-img.style.width = '200px';
-img.style.position = 'fixed';
-img.style.bottom = '50px';
-img.style.left = '1px';
-img.style['pointer-events'] = 'none';
 
 /* Removes loading screen when terrain finishes loading */
 var div = document.getElementById('loadingScreen');
